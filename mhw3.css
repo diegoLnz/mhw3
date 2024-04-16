@@ -329,12 +329,12 @@ header {
     font-size: 15px;
 }
 
-#userlink{
+.userlink{
     text-decoration: none;
     color: var(--custom-white);;
 }
 
-#userlink:hover{
+.userlink:hover{
     text-decoration: underline;
 }
 
