@@ -17,10 +17,7 @@ document.addEventListener("DOMContentLoaded", async function(){
         if((window.innerHeight + window.scrollY) < document.body.offsetHeight || visiblePosts + initialLoadCount > posts.length)
             return;
 
-        if(posts.length > visiblePosts && posts.length < visiblePosts + initialLoadCount)
-            visiblePosts = posts.length;
-        else
-            visiblePosts += initialLoadCount;
+        visiblePosts = (posts.length > visiblePosts && posts.length < visiblePosts + initialLoadCount) ? posts.length : visiblePosts + initialLoadCount;
 
         visiblePostLists = posts.slice(visiblePosts - initialLoadCount, visiblePosts);
         visiblePostLists.forEach(post => {
