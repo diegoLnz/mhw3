@@ -14,15 +14,13 @@ document.addEventListener("DOMContentLoaded", async function(){
     });
 
     window.addEventListener('scroll', () => {
-        if((window.innerHeight + window.scrollY) < document.body.offsetHeight)
+        if((window.innerHeight + window.scrollY) < document.body.offsetHeight || visiblePosts + initialLoadCount > posts.length)
             return;
 
-        visiblePosts += initialLoadCount;
-
-        if(visiblePosts > posts.length){
-            visiblePosts -= initialLoadCount;
-            return;
-        }
+        if(posts.length > visiblePosts && posts.length < visiblePosts + initialLoadCount)
+            visiblePosts = posts.length;
+        else
+            visiblePosts += initialLoadCount;
 
         visiblePostLists = posts.slice(visiblePosts - initialLoadCount, visiblePosts);
         visiblePostLists.forEach(post => {
