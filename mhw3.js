@@ -52,31 +52,7 @@ function generateInstaPostHTML(postData, container){
     const postHTML = document.createElement("div");
     postHTML.classList.add("single-post");
 
-    const timestamp = Date.parse(postData.timestamp);
-
-    let timeTillNow = Date.now() - timestamp;
-
-    let minutes = Math.floor(timeTillNow / 60000);
-
-    let formattedTime;
-    if (minutes < 60) {
-        formattedTime = minutes + " min";
-    } else {
-        let hours = Math.floor(minutes / 60);
-        //let remainingMinutes = minutes % 60;
-        if (hours < 24) {
-            formattedTime = hours + " h " /*+ remainingMinutes + " min"*/;
-        } else {
-            let days = Math.floor(hours / 24);
-            if (days > 10) {
-                const postDate = new Date(timestamp);
-                const options = { day: 'numeric', month: 'long', year: 'numeric' };
-                formattedTime = postDate.toLocaleDateString('it-IT', options);
-            } else {
-                formattedTime = days + " d";
-            }
-        }
-    }
+    let formattedTime = getPostTimeTillNow(postData.timestamp);
 
     postHTML.innerHTML += generatePostHeaderHTML(postData.username, formattedTime) + generatePostContentHTML(postData.caption, postData.media_url) + generatePostFooterHTML();
 
@@ -87,7 +63,7 @@ function generatePostHTML(post, user, container) {
     const postHTML = document.createElement("div");
     postHTML.classList.add("single-post");
 
-    postHTML.innerHTML += generatePostHeaderHTML(user.username) + generatePostContentHTML(post.body, "") + generatePostFooterHTML();
+    postHTML.innerHTML += generatePostHeaderHTML(user.username, "") + generatePostContentHTML(post.body, "") + generatePostFooterHTML();
     
     container.appendChild(postHTML);
 }
@@ -152,4 +128,34 @@ function generatePostFooterHTML(){
             <div class="view-activities-action hover-underlined">Visualizza attività</div>
         </div>
     `;
+}
+
+function getPostTimeTillNow(time){
+    const timestamp = Date.parse(time);
+
+    let timeTillNow = Date.now() - timestamp;
+
+    let minutes = Math.floor(timeTillNow / 60000);
+
+    let formattedTime;
+    if (minutes < 60) {
+        formattedTime = minutes + " min";
+    } else {
+        let hours = Math.floor(minutes / 60);
+        //let remainingMinutes = minutes % 60;
+        if (hours < 24) {
+            formattedTime = hours + " h " /*+ remainingMinutes + " min"*/;
+        } else {
+            let days = Math.floor(hours / 24);
+            if (days > 10) {
+                const postDate = new Date(timestamp);
+                const options = { day: 'numeric', month: 'long', year: 'numeric' };
+                formattedTime = postDate.toLocaleDateString('it-IT', options);
+            } else {
+                formattedTime = days + " d";
+            }
+        }
+    }
+
+    return formattedTime;
 }
