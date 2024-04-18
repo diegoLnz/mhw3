@@ -1,29 +1,30 @@
+const token = "IGQWRQOWp3Q3BQZA2t1ZAjE1X1ZAJM1M0dG0zN2RGeUtHaGlyNU1oWTAxQW9BeE9QWWN3a3NSSjRUT0xSMkdSeGhqUzg0QUl3bFlkLXJEeFczZAzM0bFB3V1VFb1laeWRRSEhYcWJadjBmeEt5YVlVLURZALWE2MC02c2cZD";
+const instaApiBaseUrl =`https://graph.instagram.com`;
+
+
 document.addEventListener("DOMContentLoaded", async function(){
+    const postContainer = document.getElementById('post-container');
+    const diegoId = "6854500444651451";
+    
     const posts = await getPosts();
     const users = await getUsers();
+    const instaPosts = await getInstaPosts(diegoId);
+    const instaPostsList = [];
+
+    for(let post of instaPosts.data){
+        let postData = await getInstaPostById(post.id);
+        instaPostsList.push(postData);
+    }
+
+    instaPostsList.sort((post1, post2) => post2.timestamp - post1.timestamp);
+
+    instaPostsList.forEach(post => {
+        generateInstaPostHTML(post, postContainer);
+    });
     
-    const postContainer = document.getElementById('post-container');
-    
-    const initialLoadCount = 10;
-    let visiblePosts = initialLoadCount;
-    let visiblePostLists = posts.slice(0, visiblePosts);
-    
-    visiblePostLists.forEach(post => {
+    posts.forEach(post => {
         const user = users.find(user => user.id === post.userId);
         generatePostHTML(post, user, postContainer);
-    });
-
-    window.addEventListener('scroll', () => {
-        if((window.innerHeight + window.scrollY) < document.body.offsetHeight || visiblePosts + initialLoadCount > posts.length)
-            return;
-
-        visiblePosts = (posts.length > visiblePosts && posts.length < visiblePosts + initialLoadCount) ? posts.length : visiblePosts + initialLoadCount;
-
-        visiblePostLists = posts.slice(visiblePosts - initialLoadCount, visiblePosts);
-        visiblePostLists.forEach(post => {
-            const user = users.find(user => user.id === post.userId);
-            generatePostHTML(post, user, postContainer);
-        });
     });
 });
 
@@ -37,11 +38,30 @@ async function getUsers(){
       .then(response => response.json());
 }
 
+async function getInstaPosts(userId){
+    return await fetch(`${instaApiBaseUrl}/v19.0/${userId}/media?access_token=${token}`)
+      .then(response => response.json());
+}
+
+async function getInstaPostById(postId){
+    return await fetch(`${instaApiBaseUrl}/${postId}?fields=id,media_type,media_url,username,timestamp&access_token=${token}`)
+      .then(response => response.json());
+}
+
+function generateInstaPostHTML(postData, container){
+    const postHTML = document.createElement("div");
+    postHTML.classList.add("single-post");
+
+    postHTML.innerHTML += generatePostHeaderHTML(postData.username) + generatePostContentHTML("", postData.media_url) + generatePostFooterHTML();
+
+    container.appendChild(postHTML);
+}
+
 function generatePostHTML(post, user, container) {
     const postHTML = document.createElement("div");
     postHTML.classList.add("single-post");
 
-    postHTML.innerHTML += generatePostHeaderHTML(user.username) + generatePostContentHTML(post.body) + generatePostFooterHTML();
+    postHTML.innerHTML += generatePostHeaderHTML(user.username) + generatePostContentHTML(post.body, "") + generatePostFooterHTML();
     
     container.appendChild(postHTML);
 }
@@ -67,12 +87,12 @@ function generatePostHeaderHTML(username){
     `;
 }
 
-function generatePostContentHTML(postBody){
+function generatePostContentHTML(postBody, postImage){
     return `
         <div class="post-content">
             <p class="post-text">${postBody}</p>
             <div class="post-image">
-                <img src="">
+                <img src="${postImage}">
             </div>
             <div class="actions-menu">
                 <div class="action-item">
