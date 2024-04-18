@@ -52,7 +52,33 @@ function generateInstaPostHTML(postData, container){
     const postHTML = document.createElement("div");
     postHTML.classList.add("single-post");
 
-    postHTML.innerHTML += generatePostHeaderHTML(postData.username) + generatePostContentHTML(postData.caption, postData.media_url) + generatePostFooterHTML();
+    const timestamp = Date.parse(postData.timestamp);
+
+    let timeTillNow = Date.now() - timestamp;
+
+    let minutes = Math.floor(timeTillNow / 60000);
+
+    let formattedTime;
+    if (minutes < 60) {
+        formattedTime = minutes + " min";
+    } else {
+        let hours = Math.floor(minutes / 60);
+        //let remainingMinutes = minutes % 60;
+        if (hours < 24) {
+            formattedTime = hours + " h " /*+ remainingMinutes + " min"*/;
+        } else {
+            let days = Math.floor(hours / 24);
+            if (days > 10) {
+                const postDate = new Date(timestamp);
+                const options = { day: 'numeric', month: 'long', year: 'numeric' };
+                formattedTime = postDate.toLocaleDateString('it-IT', options);
+            } else {
+                formattedTime = days + " d";
+            }
+        }
+    }
+
+    postHTML.innerHTML += generatePostHeaderHTML(postData.username, formattedTime) + generatePostContentHTML(postData.caption, postData.media_url) + generatePostFooterHTML();
 
     container.appendChild(postHTML);
 }
@@ -66,7 +92,7 @@ function generatePostHTML(post, user, container) {
     container.appendChild(postHTML);
 }
 
-function generatePostHeaderHTML(username){
+function generatePostHeaderHTML(username, timeTillNow){
     return `
         <div class="post-header">
             <div class="user-info">
@@ -76,7 +102,7 @@ function generatePostHeaderHTML(username){
                 </div>
             </div>
             <div class="actions-and-date">
-                <p class="upload-date">9 m</p>
+                <p class="upload-date">${timeTillNow}</p>
                 <div class="action-btn">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
                         <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3"/>
