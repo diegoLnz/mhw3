@@ -44,7 +44,7 @@ async function getInstaPosts(userId){
 }
 
 async function getInstaPostById(postId){
-    return await fetch(`${instaApiBaseUrl}/${postId}?fields=id,media_type,media_url,username,timestamp&access_token=${token}`)
+    return await fetch(`${instaApiBaseUrl}/${postId}?fields=id,media_type,media_url,username,timestamp,caption&access_token=${token}`)
       .then(response => response.json());
 }
 
@@ -52,7 +52,7 @@ function generateInstaPostHTML(postData, container){
     const postHTML = document.createElement("div");
     postHTML.classList.add("single-post");
 
-    postHTML.innerHTML += generatePostHeaderHTML(postData.username) + generatePostContentHTML("", postData.media_url) + generatePostFooterHTML();
+    postHTML.innerHTML += generatePostHeaderHTML(postData.username) + generatePostContentHTML(postData.caption, postData.media_url) + generatePostFooterHTML();
 
     container.appendChild(postHTML);
 }
