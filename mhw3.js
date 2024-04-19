@@ -18,10 +18,12 @@ document.addEventListener("DOMContentLoaded", async function(){
 
     instaPostsList.sort((post1, post2) => post2.timestamp - post1.timestamp);
 
+    //API => INSTAGRAM BASIC API
     instaPostsList.forEach(post => {
         generateInstaPostHTML(post, postContainer);
     });
     
+    //API => JSONPLACEHOLDER
     posts.forEach(post => {
         const user = users.find(user => user.id === post.userId);
         generatePostHTML(post, user, postContainer);
