@@ -142,49 +142,13 @@ function generatePostContentHTML(postBody, postImage) {
     actionsMenu.classList.add('actions-menu');
 
     //first action item
-    const firstActionItem = document.createElement('div');
-    firstActionItem.classList.add('action-item');
-    const firstSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-    firstSvg.classList.add('action-icon');
-    firstSvg.setAttribute('width', '26');
-    firstSvg.setAttribute('height', '26');
-    firstSvg.setAttribute('fill', 'currentColor');
-    firstSvg.setAttribute('viewBox', '0 0 16 16');
-    const firstPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-    firstPath.setAttribute('d', 'm8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15');
-    firstSvg.appendChild(firstPath);
-    firstActionItem.appendChild(firstSvg);
-    actionsMenu.appendChild(firstActionItem);
+    actionsMenu.appendChild(generateActionItemBySvgPath('m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15'));
 
     //second action item
-    const secondActionItem = document.createElement('div');
-    secondActionItem.classList.add('action-item');
-    const secondSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-    secondSvg.classList.add('action-icon');
-    secondSvg.setAttribute('width', '26');
-    secondSvg.setAttribute('height', '26');
-    secondSvg.setAttribute('fill', 'currentColor');
-    secondSvg.setAttribute('viewBox', '0 0 16 16');
-    const secondPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-    secondPath.setAttribute('d', 'M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576zm6.787-8.201L1.591 6.602l4.339 2.76z');
-    secondSvg.appendChild(secondPath);
-    secondActionItem.appendChild(secondSvg);
-    actionsMenu.appendChild(secondActionItem);
+    actionsMenu.appendChild(generateActionItemBySvgPath('M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576zm6.787-8.201L1.591 6.602l4.339 2.76z'));
 
     //third action item
-    const thirdActionItem = document.createElement('div');
-    thirdActionItem.classList.add('action-item');
-    const thirdSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-    thirdSvg.classList.add('action-icon');
-    thirdSvg.setAttribute('width', '26');
-    thirdSvg.setAttribute('height', '26');
-    thirdSvg.setAttribute('fill', 'currentColor');
-    thirdSvg.setAttribute('viewBox', '0 0 16 16');
-    const thirdPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-    thirdPath.setAttribute('d', 'M2.678 11.894a1 1 0 0 1 .287.801 11 11 0 0 1-.398 2c1.395-.323 2.247-.697 2.634-.893a1 1 0 0 1 .71-.074A8 8 0 0 0 8 14c3.996 0 7-2.807 7-6s-3.004-6-7-6-7 2.808-7 6c0 1.468.617 2.83 1.678 3.894m-.493 3.905a22 22 0 0 1-.713.129c-.2.032-.352-.176-.273-.362a10 10 0 0 0 .244-.637l.003-.01c.248-.72.45-1.548.524-2.319C.743 11.37 0 9.76 0 8c0-3.866 3.582-7 8-7s8 3.134 8 7-3.582 7-8 7a9 9 0 0 1-2.347-.306c-.52.263-1.639.742-3.468 1.105');
-    thirdSvg.appendChild(thirdPath);
-    thirdActionItem.appendChild(thirdSvg);
-    actionsMenu.appendChild(thirdActionItem);
+    actionsMenu.appendChild(generateActionItemBySvgPath('M2.678 11.894a1 1 0 0 1 .287.801 11 11 0 0 1-.398 2c1.395-.323 2.247-.697 2.634-.893a1 1 0 0 1 .71-.074A8 8 0 0 0 8 14c3.996 0 7-2.807 7-6s-3.004-6-7-6-7 2.808-7 6c0 1.468.617 2.83 1.678 3.894m-.493 3.905a22 22 0 0 1-.713.129c-.2.032-.352-.176-.273-.362a10 10 0 0 0 .244-.637l.003-.01c.248-.72.45-1.548.524-2.319C.743 11.37 0 9.76 0 8c0-3.866 3.582-7 8-7s8 3.134 8 7-3.582 7-8 7a9 9 0 0 1-2.347-.306c-.52.263-1.639.742-3.468 1.105'));
 
     postContent.appendChild(actionsMenu);
 
@@ -248,4 +212,25 @@ function getPostTimeTillNow(time){
     }
 
     return formattedTime;
+}
+
+function generateActionItemBySvgPath(svgPath){
+    const actionItem = document.createElement('div');
+    actionItem.classList.add('action-item');
+
+    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    svg.classList.add('action-icon');
+    svg.setAttribute('width', '26');
+    svg.setAttribute('height', '26');
+    svg.setAttribute('fill', 'currentColor');
+    svg.setAttribute('viewBox', '0 0 16 16');
+    
+    const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    path.setAttribute('d', svgPath);
+    
+    svg.appendChild(path);
+    
+    actionItem.appendChild(svg);
+
+    return actionItem;
 }
